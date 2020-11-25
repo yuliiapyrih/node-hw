@@ -1,0 +1,5 @@
+{
+    name: "Vova",
+    age: 23,
+    gender: "male"
+}

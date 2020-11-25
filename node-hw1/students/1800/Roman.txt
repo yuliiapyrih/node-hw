@@ -1,0 +1,5 @@
+{
+    name: "Roman",
+    age: 20,
+    gender: "male"
+}
