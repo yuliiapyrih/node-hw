@@ -31,7 +31,7 @@ app.get('/users',(req,res)=>{
 
         let usersInfo=JSON.parse(data.toString());
 
-        loginIsOk===true
+        loginIsOk
         ?res.render('users',{usersInfo})
         :res.redirect('/error');
 
