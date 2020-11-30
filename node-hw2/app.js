@@ -15,13 +15,14 @@ app.set('views',path.join(process.cwd(),'myPages'));
 
 let loginIsOk=false;
 let pathUser=path.join(process.cwd(),'usersInfo.json');
+let errorMessage='This page is not available!!!!!!!';
 
 app.get('/',(req,res)=>{
     loginIsOk=false;
     res.render('main');
 });
 
-app.get('/error',(req,res)=>{res.render('errorPage');});
+app.get('/error',(req,res)=>{res.render('errorPage',{errorMessage});});
 
 app.get('/users',(req,res)=>{
     fs.readFile(path.join(process.cwd(),'usersInfo.json'),(err,data)=>{
@@ -53,6 +54,8 @@ app.post('/login',(req,res)=>{
             res.redirect('/users');
             return;
         }
+
+        errorMessage="Wrong email or password!!!!!!"
         res.redirect('/error');
 
     });
@@ -71,6 +74,7 @@ app.post('/signup',(req,res)=>{
 
         if(usersInfo.find(user=>user.email===email))
         { 
+            errorMessage='Such user is already registered!!!!!!!'
             res.redirect('/error');
             return;
         } 
