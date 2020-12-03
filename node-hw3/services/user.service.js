@@ -1,5 +1,4 @@
 const usersInfo = require('../dataBase/usersInfo');
-const userInfo= require('../dataBase/usersInfo');
 
 module.exports={
 
@@ -8,6 +7,10 @@ module.exports={
     getInfoUserById:(id_user)=> userInfo[id_user],
 
     delUser:(email)=>{
-        usersInfo.splice(userInfo.indexOf(userInfo.email),1);
+        usersInfo.splice(userInfo.indexOf(email),1);
+    },
+
+    insertUser:(info)=>{
+        userInfo.push(info);
     }
 }
