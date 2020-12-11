@@ -4,9 +4,16 @@ const {currentUserEmail}=require('../dataBase/constans');
 
 module.exports={
     getUsers:(req,res)=>{
-        const usersInfo = userService.getInfoUsers();
+    const usersInfo = userService.getInfoUsers();
 
-        res.render('users',{usersInfo});
+    res.render('users',{usersInfo});
+    try {
+        const users = await userService.findUsers();
+
+        res.json(users);
+    } catch (e) {
+        res.status(400).json(e.message);
+    }
     },
 
     getUserById:(req,res)=>{
@@ -41,5 +48,12 @@ module.exports={
         signupService.insertUser(req.body);
 
         res.redirect('/users');
+        try {
+            userService.insertUser(req.body);
+
+            res.status(201).json('User cerated');
+        } catch (e) {
+            res.json(e.message);
+        }
     }
 }
