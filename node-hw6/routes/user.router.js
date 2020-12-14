@@ -10,9 +10,9 @@ userRouter.get('/:id_user', userMiddleware.checkUserId, userController.getUserBy
 
 userRouter.post('/', userMiddleware.isInfoUser,userMiddleware.isCreatedUser, userController.createUser);
 
-userRouter.put('/:id_user', userMiddleware.checkUserId, userMiddleware.checkUpdateInfo, userController.updateUser)
+userRouter.put('/:id_user', userMiddleware.checkUserId, userMiddleware.checkUpdateInfo, userController.updateUser);
 
-userRouter.delete('/:id_user', userMiddleware.checkUserId, userController.deleteUser)
+userRouter.delete('/:id_user', userMiddleware.checkUserId, userController.deleteUser);
 
 module.exports = userRouter;
 
