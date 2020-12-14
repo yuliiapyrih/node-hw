@@ -12,7 +12,7 @@ module.exports={
                 throw new ErrorHandler(NOT_VALID_ID.message,NOT_VALID_ID.code);
             }
 
-            const findUserId= await userService.findUserById(email);
+            const findUserId= await userService.findUserById(id_user);
 
             if(!!findUserId){
                 throw new ErrorHandler(HAS_NO_USER.message,HAS_NO_USER.code);
@@ -28,7 +28,7 @@ module.exports={
         try {
             const user=req.body;
 
-            if(!user.email ||  !user.name){
+            if(!user.email ||  !user.name || !user.password){
                 throw new ErrorHandler(NOT_VALID_BODY.message,NOT_VALID_BODY.code);
             }
 

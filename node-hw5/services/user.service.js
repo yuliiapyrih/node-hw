@@ -1,16 +1,19 @@
 const db = require('../dataBase').getInstance();
 
-const UserModel = db.getModel('User');
-const CarModel = db.getModel('Car');
 
 module.exports={
     getInfoUsers:()=>  {
+        const UserModel = db.getModel('User');
+        const CarModel = db.getModel('Car');
+
         return CarModel.findAll({
             include: [{ model: UserModel, as: 'user' }]
         });
     },
 
     findUser:(emailUser)=>{
+        const UserModel = db.getModel('User');
+
         return UserModel.findOne(
             {
                 where:{
@@ -20,6 +23,9 @@ module.exports={
     },
 
     findUserById:(id_user)=>{
+        const UserModel = db.getModel('User');
+        const CarModel = db.getModel('Car');
+
         return CarModel.findOne(
             {
                 where:{
@@ -30,6 +36,8 @@ module.exports={
     },
     
     getInfoUserById:(id_user)=> {
+        const UserModel = db.getModel('User');
+
         return UserModel.findOne(
             {
                 where:{
@@ -39,6 +47,8 @@ module.exports={
     },
 
     delUser:(id_user)=>{
+        const UserModel = db.getModel('User');
+        
         return UserModel.destroy(
             {
                 where:{
@@ -49,10 +59,19 @@ module.exports={
 
 
     insertUser:(info)=>{
-        return UserModel.create(
+        const UserModel = db.getModel('User');
+        const CarModel = db.getModel('Car');
+
+        UserModel.create(
             {
                 nameuser:info.name,
-                email: info.email
+                email: info.email,
+                password: info.password
             });
+        CarModel.create(
+            {
+                model:info.car.model
+            });
+            return
     }
 }

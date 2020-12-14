@@ -14,15 +14,17 @@ const {userRouter}=require('./routes');
 app.use('/users',userRouter);
 // eslint-disable-next-line no-unused-vars
 app.use('*', (err, req, res, next) => {
+    res.locals.error = err;
+    const code = err.code || 500;
     res
-        .status(err.code)
+        .status(code)
         .json({
             message: err.message,
             ok: false
         });
 });
 
-app.listen(5000,()=> {
+app.listen(3001,()=> {
     console.log('listen');
 });
 

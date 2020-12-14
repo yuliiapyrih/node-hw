@@ -5,9 +5,9 @@ module.exports={
         try {
             const users = await userService.getInfoUsers();
             
-            res.json(users);
+            res.status(201).json(users);
         } catch (e) {
-            next(error);
+            next(e);
         }
     },
 
@@ -31,7 +31,7 @@ module.exports={
 
             res.json("User delete");
         } catch (error) {
-            
+            next(error);
         }
     },
     
