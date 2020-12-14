@@ -1,24 +1,24 @@
 const userService = require('../services/user.service');
 
-const {ErrorHandler,errors:{NOT_VALID_BODY,NOT_VALID_ID,USER_ALREADY_EXISTS,HAS_NO_USER}} = require('../error');
-const {checkId,checkUser}=require('../validators');
+const { ErrorHandler, errors: { NOT_VALID_BODY, NOT_VALID_ID, USER_ALREADY_EXISTS, HAS_NO_USER } } = require('../error');
+const { newUserValidator, idValidator, updateUserValidator } = require('../validators');
+const { BAD_REQUEST } = require('../configs/errors-code')
 
-module.exports={
-
-    checkUserId:async (req,res,next)=>{
+module.exports = {
+    checkUserId: async (req,res,next) => {
         try {
-            const {id_user}=req.params;
+            const { id_user } = req.params;
 
-            const {error} = checkId.validate(id_user);
+            const { error} = idValidator.validate(id_user);
 
             if(error){
-                throw new ErrorHandler(NOT_VALID_ID.message,NOT_VALID_ID.code);
+                throw new ErrorHandler(error.details[0].message, BAD_REQUEST);
             }
 
             const findUserId= await userService.findUserById(id_user);
 
             if(!!findUserId){
-                throw new ErrorHandler(HAS_NO_USER.message,HAS_NO_USER.code);
+                throw new ErrorHandler(HAS_NO_USER.message, HAS_NO_USER.code);
             }
 
             next();
@@ -27,12 +27,26 @@ module.exports={
         }
     },
 
-    isInfoUser:(req,res,next)=>{
+    checkUpdateInfo: async (req,res,next) => {
         try {
-            const {error}=checkUser.validate(req.body);
+            const { error } = updateUserValidator.validate(req.body);
 
             if(error){
-                throw new ErrorHandler(NOT_VALID_BODY.message,NOT_VALID_BODY.code);
+                throw new ErrorHandler(error.details[0].message, BAD_REQUEST);
+            }
+
+            next();
+        } catch (e) {
+            next(e)
+        }
+    },
+
+    isInfoUser: (req,res,next) => {
+        try {
+            const { error } = newUserValidator.validate(req.body);
+
+            if(error){
+                throw new ErrorHandler(error.details[0].message, BAD_REQUEST);
             }
 
             next();
@@ -40,14 +54,15 @@ module.exports={
             next(error);
         }
     },
-    isCreatedUser:async (req,res,next)=>{
-        try {
-            const {email}=req.body;
-            
-            const findUs= await userService.findUser(email);
 
-            if(!!findUs){
-                throw new ErrorHandler(USER_ALREADY_EXISTS.message,USER_ALREADY_EXISTS.code);
+    isCreatedUser: async (req,res,next) => {
+        try {
+            const { email } = req.body;
+            
+            const isFind = await userService.findUser(email);
+
+            if(!!isFind){
+                throw new ErrorHandler(USER_ALREADY_EXISTS.message, USER_ALREADY_EXISTS.code);
             }
 
             next();
@@ -55,4 +70,4 @@ module.exports={
             next(error);
         }
     } 
-}
+};

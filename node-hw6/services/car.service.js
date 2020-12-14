@@ -1,8 +1,8 @@
 const db = require('../dataBase').getInstance();
 
 
-module.exports={
-    getInfoUsersWithCar:()=>  {
+module.exports = {
+    getUsersWithCar: () => {
         const UserModel = db.getModel('User');
         const CarModel = db.getModel('Car');
 
@@ -11,7 +11,7 @@ module.exports={
         });
     },
 
-    findUserWithCarById:(id_user)=>{
+    findUserById: (id_user) => {
         const UserModel = db.getModel('User');
         const CarModel = db.getModel('Car');
 
@@ -24,7 +24,7 @@ module.exports={
             });
     },
     
-    getInfoUserWithCarById:(id_user)=> {
+    getInfoById: (id_user) => {
         const UserModel = db.getModel('User');
         const CarModel = db.getModel('Car');
 
@@ -37,7 +37,7 @@ module.exports={
             });
     },
 
-    insertCar:(id_user,model)=>{
+    insertCar: (id_user, modelCar) => {
         const CarModel = db.getModel('Car');
         
         return CarModel.create(
@@ -46,4 +46,4 @@ module.exports={
                 user_id:id_user
             });
     }
-}
+};

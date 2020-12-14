@@ -1,24 +1,24 @@
 const carService = require('../services/car.service');
 
-const {ErrorHandler,errors:{NOT_VALID_BODY,NOT_VALID_ID,HAS_NO_USER}} = require('../error');
-const {checkId,checkCar}=require('../validators');
+const { ErrorHandler, errors } = require('../error');
+const { BAD_REQUEST } = require('../configs/errors-code');
+const { idValidator, newCarValidator } = require('../validators');
 
 module.exports={
-
-    checkUserWithCarId:async (req,res,next)=>{
+    checkUserWithCarId: async (req,res,next) => {
         try {
-            const {id_user}=req.params;
+            const { id_user } = req.params;
 
-            const {error} = checkId.validate(id_user);
+            const { error } = idValidator.validate(id_user);
 
             if(error){
-                throw new ErrorHandler(NOT_VALID_ID.message,NOT_VALID_ID.code);
+                throw new ErrorHandler(error.details[0].message, BAD_REQUEST);
             }
 
-            const findUserId= await carService.findUserWithCarById(id_user);
+            const findUserId = await carService.findUserById(id_user);
 
             if(!!findUserId){
-                throw new ErrorHandler(HAS_NO_USER.message,HAS_NO_USER.code);
+                throw new ErrorHandler(errors.HAS_NO_USER.message, errors.HAS_NO_USER.code);
             }
 
             next();
@@ -27,12 +27,12 @@ module.exports={
         }
     },
 
-    isInfoCar:(req,res,next)=>{
+    isInfoCar: (req,res,next) => {
         try {
-            const {error}=checkCar.validate(req.body);
+            const { error } = newCarValidator.validate(req.body);
 
             if(error){
-                throw new ErrorHandler(NOT_VALID_BODY.message,NOT_VALID_BODY.code);
+                throw new ErrorHandler(error.details[0].message, BAD_REQUEST);
             }
 
             next();
@@ -40,4 +40,4 @@ module.exports={
             next(error);
         }
     }
-}
+};

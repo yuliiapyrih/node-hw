@@ -21,8 +21,8 @@ module.exports = {
         code:FORBIDDEN
     },
 
-    NOT_VALID_EMAIL_OR_PASSWD: {
-        message:'Not valid email or password!!!!!!',
-        code:BAD_REQUEST
+    NOT_VALID_EMAIL_OR_PASSWORD: {
+        message: 'Not valid email or password!!!!!!',
+        code: BAD_REQUEST
     }
 };

@@ -1,7 +1,6 @@
 const db = require('../dataBase').getInstance();
 
-
-module.exports={
+module.exports = {
     getInfoUsers:()=>  {
         const UserModel = db.getModel('User');
 
@@ -19,7 +18,7 @@ module.exports={
             });
     },
 
-    findUserById:(id_user)=>{
+    findUserById: (id_user) => {
         const UserModel = db.getModel('User');
 
         return UserModel.findOne(
@@ -30,7 +29,7 @@ module.exports={
             });
     },
     
-    getInfoUserById:(id_user)=> {
+    getInfoUserById: (id_user) => {
         const UserModel = db.getModel('User');
 
         return UserModel.findOne(
@@ -41,7 +40,7 @@ module.exports={
             });
     },
 
-    delUser:(id_user)=>{
+    delUser: (id_user) => {
         const UserModel = db.getModel('User');
         
         return UserModel.destroy(
@@ -52,15 +51,28 @@ module.exports={
             });
     },
 
-
-    insertUser:(info)=>{
+    insertUser: (info) => {
         const UserModel = db.getModel('User');
 
         return UserModel.create(
             {
-                nameuser:info.name,
+                nameuser: info.name,
                 email: info.email,
                 password: info.password
             });
+    },
+
+    updateInfoUser: (id_user, info) => {
+        const UserModel = db.getModel('User');
+
+        return UserModel.update(
+            info,
+            { 
+                where: {
+                     id: id_user 
+                    } 
+            }
+        )
+    
     }
-}
+};

@@ -1,4 +1,4 @@
-module.exports={
+module.exports = {
   "development": {
     "username": "user",
     "password": "user",
@@ -6,4 +6,4 @@ module.exports={
     "host": "127.0.0.1",
     "dialect": "mysql"
   }
-}
+};
