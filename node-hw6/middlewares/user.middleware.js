@@ -1,6 +1,6 @@
 const userService = require('../services/user.service');
 
-const { ErrorHandler, errors: { NOT_VALID_BODY, NOT_VALID_ID, USER_ALREADY_EXISTS, HAS_NO_USER } } = require('../error');
+const { ErrorHandler, errors: { USER_ALREADY_EXISTS, HAS_NO_USER } } = require('../error');
 const { newUserValidator, idValidator, updateUserValidator } = require('../validators');
 const { BAD_REQUEST } = require('../configs/errors-code')
 

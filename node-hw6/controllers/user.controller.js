@@ -29,6 +29,8 @@ module.exports={
         try {
             const { id_user } = req.params;
 
+            req.body.password = await hashPassword(user.password);
+
             await userService.updateInfoUser(id_user, req.body);
 
             res.json('User update');
